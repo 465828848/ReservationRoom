@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.reservation.room.dao.TimePointMapper">
+  <resultMap id="TimePoint" type="TimePointModel">
+    <result column="timePoint" jdbcType="INTEGER" property="timePoint" />
+    <result column="time" jdbcType="TIME" property="time" />
+  </resultMap>
+  <select id="selectAllTime" resultMap="TimePoint">
+    SELECT * FROM time_point
+  </select>
+</mapper>

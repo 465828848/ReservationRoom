@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="description" content="Vanilla javascript plugin for building nice responsive timetables">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Timetable.js demo</title>
+		<link rel="stylesheet" href="styles/timetablejs.css">
+		<link rel="stylesheet" href="styles/demo.css">
+		<style type="text/css">
+			select {
+				width: 180px;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<div class="hero-unit">
+			<form action="login.do?act=login" method="post">
+				<span>会议室：</span>
+				<select name="sel">
+					<option value="1">广州</option>
+					<option value="2">深圳</option>
+					<option value="3">山东</option>
+					<option value="4">北京</option>
+				</select><br>
+				<span>预订时间：</span><input type=text name="userId" size="18" value=""><br>
+				<span>周期预订：</span><input type=text name="userId" size="18" value=""><br>
+				<span>连续预订：</span><input type=text name="userId" size="18" value=""><br>
+				<span>开始时间：</span>
+				<select name="sel">
+					<option value="1">广州</option>
+					<option value="2">深圳</option>
+					<option value="3">山东</option>
+					<option value="4">北京</option>
+				</select><br>
+				<span>结束时间：</span>
+				<select name="sel">
+					<option value="1">广州</option>
+					<option value="2">深圳</option>
+					<option value="3">山东</option>
+					<option value="4">北京</option>
+				</select><br>
+				<span>预订人：</span><input type=text name="userId" size="18" value=""><br>
+				<span>电话：</span><input type=text name="userId" size="18" value=""><br>
+				<span>邮箱：</span><input type=text name="userId" size="18" value=""><br>
+				<span>预订原因：</span><input type=text name="userId" size="18" value=""><br>
+				<span>预订说明：<textarea cols="18" rows="7" name="text" placeholder="预订说明"></textarea>
+				<input type=submit name="submit1" value="登陆" onclick="return check(this.form)">
+			</form>
+		</div>
+
+		<div class="timetable"></div>
+
+		<script src="scripts/timetable.js"></script>
+
+		<script>
+			var timetable = new Timetable();
+
+			timetable.setScope(0, 23);
+
+			timetable.addLocations(['501', '502', '503', '504', '505', '506', '507']);
+
+			timetable.addEvent('课程1', '501', new Date(2015, 7, 17, 0), new Date(2015, 7, 17, 2), {
+				url: '#'
+			});
+			//			timetable.addEvent('课程2', '502', new Date(2015, 7, 17, 12), new Date(2015, 7, 17, 13), {
+			//				url: '#'
+			//			});
+			//			timetable.addEvent('课程3', '502', new Date(2015, 7, 17, 13), new Date(2015, 7, 17, 15), {
+			//				url: '#'
+			//			});
+			//			timetable.addEvent('课程4', '504', new Date(2015, 7, 17, 17), new Date(2015, 7, 17, 19), {
+			//				class: 'vip-only',
+			//				data: {
+			//					maxPlayers: 14,
+			//					gameType: 'Capture the flag'
+			//				}
+			//			});
+			//			timetable.addEvent('课程5', '505', new Date(2015, 7, 17, 11), new Date(2015, 7, 17, 12, 30), {
+			//				url: '#'
+			//			});
+			//			timetable.addEvent('课程6', '507', new Date(2015, 7, 17, 11, 30), new Date(2015, 7, 17, 20)); // options attribute is not used for this event
+			//			timetable.addEvent('课程7', '503', new Date(2015, 7, 17, 12, 30), new Date(2015, 7, 17, 16, 15)); // options attribute is not used for this event
+			//			timetable.addEvent('课程8', '506', new Date(2015, 7, 17, 9, 30), new Date(2015, 7, 17, 11, 45), {
+			//				onClick: function(event) {
+			//					window.alert('You clicked on the ' + event.name + ' event in ' + event.location + '. This is an example of a click handler');
+			//				}
+			//			});
+			//			timetable.addEvent('课程9', '501', new Date(2015, 7, 17, 18, 00), new Date(2015, 7, 17, 18, 10), {
+			//				class: 'vip-only'
+			//			});
+
+			var renderer = new Timetable.Renderer(timetable);
+			renderer.draw('.timetable');
+		</script>
+	</body>
+
+</html>

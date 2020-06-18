@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录页</title>
+    <script type="text/javascript"src="./js/jquery.min.js"></script>
+</head>
+<body>
+<div class="login">
+    <form>
+        <span>用户名：</span><input type="text" name="userName" size="15" value=""><br>
+        <span>密码：</span><input type="password" name="userPassword" size="16" value=""><br>
+		<input type="button" id="btn_login" value="登陆">
+    </form>
+    <script type="text/javascript">
+        $(function(){
+            //提交表单
+            $('#btn_login').click(function(){
+                let userName = $("input[name='userName']");
+                let userPassword = $("input[name='userPassword']");
+                if(userName.val() == ''){
+                    alert('请填写用户名！');
+                    userName.focus();
+                }else if(userPassword.val() == ''){
+                    alert('请填写密码！');
+                    userPassword.focus();
+                }else{
+                    $.ajax({
+                        //几个参数需要注意一下
+                        type: "POST",//方法类型
+                        dataType: "json",//预期服务器返回的数据类型
+                        url: "/checkLogin" ,//url
+                        data: {userName: userName.val(), userPassword: userPassword.val()},
+                        success:function(data) {
+                            if (data.result == "success") {
+                                window.location.href = "/index";
+                            } else {
+                                alert("用户名或密码错误");
+                            }
+                        },
+                        error : function() {
+                            alert("发生异常");
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</div>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.reservation.room.dao.AppointmentMapper">
+  <select id="checkReservationRoom" parameterType="com.reservation.room.model.AppointmentModel" resultType="int">
+    SELECT COUNT(1) FROM appointment
+    WHERE conferenceroom = #{conferenceRoom}
+    AND appointDate = #{appointDate}
+    AND ((appointBeginTime &gt;= #{appointBeginTime} AND appointBeginTime &lt; #{appointEndTime})
+    OR (appointEndTime &gt; #{appointBeginTime} AND appointEndTime &lt;= #{appointEndTime})
+    OR (appointBeginTime &lt;= #{appointBeginTime} AND appointEndTime &gt;= #{appointEndTime}))
+  </select>
+  <insert id="reservationRoom" parameterType="com.reservation.room.model.AppointmentModel">
+    INSERT INTO appointment ( createTime, conferenceRoom, userName, appointDate, appointBeginTime, appointEndTime, appointUser, appointPhone, appointMail, appointCauseCd, appointExplain )
+    VALUES(
+    #{createTime,jdbcType=BIGINT},
+    #{conferenceRoom,jdbcType=CHAR},
+    #{userName,jdbcType=VARCHAR},
+    #{appointDate,jdbcType=DATE},
+    #{appointBeginTime,jdbcType=INTEGER},
+    #{appointEndTime,jdbcType=INTEGER},
+    #{appointUser,jdbcType=VARCHAR},
+    #{appointPhone,jdbcType=CHAR},
+    #{appointMail,jdbcType=VARCHAR},
+    #{appointCauseCd,jdbcType=CHAR},
+    #{appointExplain,jdbcType=VARCHAR}
+)
+  </insert>
+  <select id="selectToDayAppointment" parameterType="java.lang.String" resultType="com.reservation.room.model.AppointmentModel">
+    SELECT
+        createTime,
+        conferenceRoom,
+        userName,
+        appointDate,
+        begin_time.time AS appointBeginTime,
+        end_time.time AS appointEndTime,
+        appointUser,
+        appointPhone,
+        appointMail,
+        appointCauseCd,
+        appointExplain
+    FROM
+        appointment
+        LEFT JOIN time_point begin_time ON appointment.appointBeginTime = begin_time.timePoint
+        LEFT JOIN time_point end_time ON appointment.appointEndTime = end_time.timePoint
+    WHERE
+        appointDate = #{0}
+  </select>
+</mapper>
